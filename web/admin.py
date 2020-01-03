@@ -17,7 +17,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'email' , 'password'
+                'first_name' , 'last_name','email' , 'password'
             ),
         }),
         (
@@ -33,7 +33,7 @@ class CustomUserAdmin(UserAdmin):
         (None,{
             'classes': ('wide',),
             'fields' : (
-                'email' , 'password1' , 'password2' , 'is_active','is_staff'
+                'first_name' , 'last_name','email' , 'password1' , 'password2' , 'is_active','is_staff'
             ),
         }),
     )

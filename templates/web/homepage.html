@@ -12,7 +12,7 @@
 
 {% if user.is_authenticated %}
 
-<p>Hello {{user.email}}</p>
+<p>Hello {{user.first_name}}</p>
 
 {% else %}
 <a href="{% url 'login' %}">Login</a>
@@ -20,3 +20,4 @@
     {% endif %}
 </body>
 </html>
+
