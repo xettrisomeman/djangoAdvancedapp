@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
-<body>
+{% extends 'web/base.html '%}
 
-<h1>Login</h1>
+{% load crispy_forms_tags %}
+{% block title %}
+LogIn
+{% endblock title%}
 
-<form method='post'>
+
+{% block content %}
+
+<form method='post' novalidate> 
 {% csrf_token %}
-{{form.as_p}}
-
-<input type="submit" value='login'>
-
-<a href="{% url 'password_reset' %}">Forgot your password?</a>
-<br>
-<a href="{% url 'signup' %}">Create new account</a>
+  {{form|crispy}}
+  <input type="submit" class="bg-primary btn-lg" value='Login'>
+  <a href="{% url 'signup' %}">Signup</a>
 </form>
-    
-</body>
-</html>
+
+{% endblock %}

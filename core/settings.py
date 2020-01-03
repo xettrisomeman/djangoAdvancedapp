@@ -34,6 +34,9 @@ INSTALLED_APPS = [
 
     #djangorestframework
     'rest_framework',
+
+    #crispyforms
+    'crispy_forms'
 ]
 
 AUTH_USER_MODEL='web.CustomUser'
@@ -129,3 +132,5 @@ LOGIN_REDIRECT_URL = reverse_lazy('homepage')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
 
+
+CRISPY_TEMPLATE_PACK='bootstrap4'
