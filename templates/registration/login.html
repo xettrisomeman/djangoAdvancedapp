@@ -12,7 +12,7 @@ LogIn
 {% csrf_token %}
   {{form|crispy}}
   <input type="submit" class="bg-primary btn-lg" value='Login'>
-  <a href="{% url 'signup' %}">Signup</a>
+  <a href="{% url 'signup' %}">New User?create your acccount!</a>
 </form>
 
 {% endblock %}

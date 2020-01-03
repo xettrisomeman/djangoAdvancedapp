@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SignUp</title>
-</head>
-<body>
-    
+ {% extends 'web/base.html '%}
+
+{% load crispy_forms_tags %}
+{% block title %}
+SignUp
+{% endblock title%}
+
+
+{% block content %}
     <h1>Signup</h1>
 
     <form method='post' novalidate>
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value='signup'>
+    {{form|crispy}}
+    <input type="submit" class='bg-primary btn-lg' value='Signup'>
     
     </form>
-</body>
-</html>
+{% endblock content %}
