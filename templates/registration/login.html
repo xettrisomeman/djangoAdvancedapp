@@ -15,6 +15,10 @@
 {{form.as_p}}
 
 <input type="submit" value='login'>
+
+<a href="{% url 'password_reset' %}">Forgot your password?</a>
+<br>
+<a href="{% url 'signup' %}">Create new account</a>
 </form>
     
 </body>
