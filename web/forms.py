@@ -22,3 +22,9 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('email',)
 
 
+class UserLoginForm(AuthenticationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = "__all__"
+
