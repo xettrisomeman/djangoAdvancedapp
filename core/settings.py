@@ -126,4 +126,6 @@ STATIC_URL = '/static/'
 from django.urls import reverse_lazy
 
 LOGIN_REDIRECT_URL = reverse_lazy('homepage')
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
+
 
