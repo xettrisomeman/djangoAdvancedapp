@@ -12,6 +12,7 @@ urlpatterns = [
     path('list/<uuid:post>/' , views.PostDetailView.as_view() ,name='detailview'),
     path('list/create/' , views.PostCreateView.as_view() , name='create'),
     path('list/update/<uuid:post_id>/' , views.PostUpdateView.as_view() , name='update'),
-
+    path('list/delete/<uuid:post_id>/' , views.PostDeleteView.as_view() , name='delete'),
     
+
 ]

@@ -8,7 +8,8 @@ from django.views.generic import (
     CreateView  ,
     ListView,
     DetailView , 
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -83,4 +84,14 @@ class PostUpdateView(LoginRequiredMixin , UpdateView):
     def get_context_data(self, **kwargs):
         kwargs['data'] = 'update'
         return super().get_context_data(**kwargs)
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'web/postdelete.html'
+    success_url = reverse_lazy('list')
+    context_object_name = 'post'
+
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(post_id=self.kwargs['post_id'])
 
