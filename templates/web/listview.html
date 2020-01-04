@@ -8,6 +8,10 @@ List
 
 {% block content %}
 
+{% for message in messages%}
+<p class='text-danger'>{{message}}</p>
+{% endfor %}
+
 <h1>Post List</h1>
 <a href="{% url 'create' %}">Add</a>
 

@@ -12,6 +12,7 @@ from django.views.generic import (
     DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import CustomUser , Post
 from .forms import (
@@ -55,11 +56,12 @@ class PostDetailView(LoginRequiredMixin,DetailView):
         return self.model.objects.get(post_id=self.kwargs['post'])
 
 
-class PostCreateView(LoginRequiredMixin , CreateView):
+class PostCreateView(SuccessMessageMixin,LoginRequiredMixin , CreateView):
     model = Post
     form_class = PostForm
     template_name = 'web/postview.html'
     success_url = reverse_lazy('list')
+    success_message = 'Post has been created'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -72,11 +74,12 @@ class PostCreateView(LoginRequiredMixin , CreateView):
         return super().get_context_data(**kwargs)
 
 
-class PostUpdateView(LoginRequiredMixin , UpdateView):
+class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'web/postview.html'
     success_url = reverse_lazy('list')
+    success_message = 'Post has been updated'
 
     def get_object(self, queryset=None):
         return self.model.objects.get(post_id=self.kwargs['post_id'])
@@ -85,12 +88,11 @@ class PostUpdateView(LoginRequiredMixin , UpdateView):
         kwargs['data'] = 'update'
         return super().get_context_data(**kwargs)
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
     model = Post
     template_name = 'web/postdelete.html'
     success_url = reverse_lazy('list')
     context_object_name = 'post'
-
 
     def get_object(self, queryset=None):
         return self.model.objects.get(post_id=self.kwargs['post_id'])
