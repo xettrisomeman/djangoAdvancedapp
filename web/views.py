@@ -7,7 +7,8 @@ from django.views.generic import (
     TemplateView,
     CreateView  ,
     ListView,
-    DetailView
+    DetailView , 
+    UpdateView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -56,10 +57,30 @@ class PostDetailView(LoginRequiredMixin,DetailView):
 class PostCreateView(LoginRequiredMixin , CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'web/createview.html'
+    template_name = 'web/postview.html'
     success_url = reverse_lazy('list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.save()
         return super().form_valid(form)
+
+
+    def get_context_data(self, **kwargs):
+        kwargs['data'] = 'add'
+        return super().get_context_data(**kwargs)
+
+
+class PostUpdateView(LoginRequiredMixin , UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'web/postview.html'
+    success_url = reverse_lazy('list')
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(post_id=self.kwargs['post_id'])
+
+    def get_context_data(self, **kwargs):
+        kwargs['data'] = 'update'
+        return super().get_context_data(**kwargs)
+

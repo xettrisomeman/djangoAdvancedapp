@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _ 
 from django.utils import timezone
+from django.urls import reverse
+    
+
+
 from .managers import CustomUserManager
 
 
@@ -39,4 +43,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    
+    def get_absolute_url(self):
+        return reverse("detail", kwargs={"post_id": self.post_id})
+

@@ -14,5 +14,7 @@ Post Detail
 <p>Created_at: {{post.modified_at}}</p>
 
 <p>{{post.content}}</p>
+<a href="{% url 'update' post.post_id %}" class="btn-primary">Update</a>
 <a href="{% url 'list' %}">Go Back</a>
 {% endblock %}
+

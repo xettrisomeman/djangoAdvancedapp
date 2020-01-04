@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Create
+{{data}}
 {% endblock title%}
 
 
@@ -12,7 +12,7 @@ Create
 {% csrf_token %}
 {{form|crispy}}
 
-<input type="submit" class='bg-primary btn-lg' value='Create'>
+<input type="submit" class='bg-primary btn-lg' value={{data|title}}>
 </form>
 
 {% endblock content %}
