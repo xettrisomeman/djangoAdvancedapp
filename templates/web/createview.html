@@ -1,0 +1,18 @@
+{% extends 'web/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Create
+{% endblock title%}
+
+
+{% block content %}
+
+<form method='post' novalidate>
+{% csrf_token %}
+{{form|crispy}}
+
+<input type="submit" class='bg-primary btn-lg' value='Create'>
+</form>
+
+{% endblock content %}

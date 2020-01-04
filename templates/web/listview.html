@@ -9,6 +9,7 @@ List
 {% block content %}
 
 <h1>Post List</h1>
+<a href="{% url 'create' %}">Add</a>
 
 {% if posts%}
 {% for post in posts %}

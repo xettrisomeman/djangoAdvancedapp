@@ -14,7 +14,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import CustomUser , Post
 from .forms import (
     CustomUserAddForm,
-    UserLoginForm
+    UserLoginForm,
+    PostForm
 )
 
 
@@ -52,3 +53,13 @@ class PostDetailView(LoginRequiredMixin,DetailView):
         return self.model.objects.get(post_id=self.kwargs['post'])
 
 
+class PostCreateView(LoginRequiredMixin , CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'web/createview.html'
+    success_url = reverse_lazy('list')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.save()
+        return super().form_valid(form)

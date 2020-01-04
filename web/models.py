@@ -23,8 +23,8 @@ class CustomUser(AbstractUser):
 
 
 class Post(models.Model):
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE ,blank=True)
-    title = models.CharField(max_length=100 , blank=True)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     post_id = models.UUIDField(default=uuid.uuid4 ,editable=False)
     content = models.TextField()
     created_at = models.DateTimeField(editable=False)

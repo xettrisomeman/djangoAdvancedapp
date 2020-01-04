@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
     UserCreationForm,
     AuthenticationForm
 )
-from .models import CustomUser
+from .models import CustomUser , Post
 
 
 class CustomUserAddForm(UserCreationForm):
@@ -28,3 +28,8 @@ class UserLoginForm(AuthenticationForm):
         model = CustomUser
         fields = "__all__"
 
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title' , 'content')
