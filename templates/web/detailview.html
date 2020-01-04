@@ -1,0 +1,18 @@
+{% extends 'web/base.html' %}
+
+
+{% block title %}
+Post Detail 
+{% endblock %}
+
+
+
+{% block content %}
+
+<h1>{{post.title}}</h1>
+<p>Author: {{post.created_by.first_name}}</p>
+<p>Created_at: {{post.modified_at}}</p>
+
+<p>{{post.content}}</p>
+<a href="{% url 'list' %}">Go Back</a>
+{% endblock %}

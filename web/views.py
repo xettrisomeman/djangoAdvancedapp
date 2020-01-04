@@ -5,11 +5,13 @@ from django.contrib.auth.views import (
 )
 from django.views.generic import (
     TemplateView,
-    CreateView
+    CreateView  ,
+    ListView,
+    DetailView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import CustomUser
+from .models import CustomUser , Post
 from .forms import (
     CustomUserAddForm,
     UserLoginForm
@@ -32,4 +34,21 @@ class SignUpView(CreateView):
     form_class = CustomUserAddForm
     template_name='registration/signup.html'
     success_url = reverse_lazy('login')
+
+
+class PostListView(LoginRequiredMixin,ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'web/listview.html'
+
+
+class PostDetailView(LoginRequiredMixin,DetailView):
+    model = Post
+    context_object_name = 'post'
+    template_name= 'web/detailview.html'
+
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(post_id=self.kwargs['post'])
+
 
