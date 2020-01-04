@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _ 
-
+from django.utils import timezone
 from .managers import CustomUserManager
 
+
+import uuid
 
 class CustomUser(AbstractUser):
     username = None
@@ -20,7 +22,21 @@ class CustomUser(AbstractUser):
         return self.email
 
 
+class Post(models.Model):
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE ,blank=True)
+    title = models.CharField(max_length=100 , blank=True)
+    post_id = models.UUIDField(default=uuid.uuid4 ,editable=False)
+    content = models.TextField()
+    created_at = models.DateTimeField(editable=False)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def save(self):
+        if not self.id:
+            self.created_at = timezone.now()
+        return super().save()
 
     
+    def __str__(self):
+        return self.title
 
-
+    
