@@ -28,7 +28,7 @@ docker-compose run web python manage.py migrate
 ## Now run the app 
 
 ```
-docker-compose run
+docker-compose up
 ```
 
 ## Go to http://localhost:8001/ and check
