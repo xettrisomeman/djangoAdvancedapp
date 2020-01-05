@@ -77,3 +77,7 @@ python manage.py runserver
 ```
 
 ## Now go to http://localhost:8000 and check
+
+## Note (to run this app using python server)-
+- You have to have postgresql installed
+- go to settings.py and change the database settings similiar to your postgres settings.
