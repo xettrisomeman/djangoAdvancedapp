@@ -46,3 +46,20 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("detail", kwargs={"post_id": self.post_id})
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE , blank=True)
+    commented_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE , blank=True)
+    created_at= models.DateTimeField(editable=False)
+    comment_id = models.UUIDField(default=uuid.uuid4 , editable=False)
+    modified_at= models.DateTimeField(auto_now=True)
+    comments = models.TextField()
+
+    def save(self):
+        if not self.id:
+            self.created_on = timezone.now()
+        return super().save()
+    
+    def __str__(self):
+        return self.comment_id
+    
