@@ -1,24 +1,33 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect , get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.views import (
     LoginView , 
 )
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib import messages
 from django.views.generic import (
     TemplateView,
     CreateView  ,
     ListView,
     DetailView , 
     UpdateView,
-    DeleteView
+    DeleteView,
+    FormView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .models import CustomUser , Post
+from .models import (
+    CustomUser,
+    Post,
+    Comment
+)
 from .forms import (
     CustomUserAddForm,
     UserLoginForm,
-    PostForm
+    PostForm,
+    CommentForm
 )
 
 
@@ -56,7 +65,30 @@ class PostDetailView(LoginRequiredMixin,DetailView):
 
 
     def get_object(self, queryset=None):
-        return self.model.objects.get(post_id=self.kwargs['post'])
+        return self.model.objects.get(post_id=self.kwargs['post_id'])
+
+
+@login_required(redirect_field_name=settings.LOGIN_REDIRECT_URL)
+def post_detail_view(request,post_id):
+    post = get_object_or_404(Post , post_id=post_id)
+    form = CommentForm()
+    comments = Comment.objects.all()
+    datas = {
+        'post':post,
+        'form':form,
+        'comments':comments
+    }
+    if request.method=='POST':
+        form=CommentForm(request.POST)
+        if form.is_valid():
+            data = Comment(commented_by=request.user , post=post , comments=form.cleaned_data['comments'])
+            data.save()
+            messages.add_message(request, messages.INFO, 'Comment has been added')
+            return render(request , 'webs/detailview.html' , datas)
+    return render(request, 'webs/detailview.html' , datas)
+
+
+
 
 
 class PostCreateView(SuccessMessageMixin,LoginRequiredMixin , CreateView):
@@ -110,4 +142,6 @@ class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
 
     def get_object(self, queryset=None):
         return self.model.objects.get(post_id=self.kwargs['post_id'])
+
+
 
