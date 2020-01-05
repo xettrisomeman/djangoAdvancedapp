@@ -23,7 +23,7 @@ from .forms import (
 
 
 class HomePageView(LoginRequiredMixin,TemplateView):
-    template_name = 'web/homepage.html'
+    template_name = 'webs/homepage.html'
 
 
 class UserLoginView(LoginView):
@@ -43,13 +43,13 @@ class SignUpView(CreateView):
 class PostListView(LoginRequiredMixin,ListView):
     model = Post
     context_object_name = 'posts'
-    template_name = 'web/listview.html'
+    template_name = 'webs/listview.html'
 
 
 class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
     context_object_name = 'post'
-    template_name= 'web/detailview.html'
+    template_name= 'webs/detailview.html'
 
 
     def get_object(self, queryset=None):
@@ -59,7 +59,7 @@ class PostDetailView(LoginRequiredMixin,DetailView):
 class PostCreateView(SuccessMessageMixin,LoginRequiredMixin , CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'web/postview.html'
+    template_name = 'webs/postview.html'
     success_url = reverse_lazy('list')
     success_message = 'Post has been created'
 
@@ -77,7 +77,7 @@ class PostCreateView(SuccessMessageMixin,LoginRequiredMixin , CreateView):
 class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'web/postview.html'
+    template_name = 'webs/postview.html'
     success_url = reverse_lazy('list')
     success_message = 'Post has been updated'
 
@@ -90,7 +90,7 @@ class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
 
 class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
     model = Post
-    template_name = 'web/postdelete.html'
+    template_name = 'webs/postdelete.html'
     success_url = reverse_lazy('list')
     context_object_name = 'post'
 
