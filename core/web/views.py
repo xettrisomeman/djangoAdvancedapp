@@ -82,7 +82,7 @@ class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
     success_message = 'Post has been updated'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.email != self.get_object().email :
+        if request.user.email != self.get_object().created_by.email :
             return redirect(reverse_lazy('list'))
         return super().dispatch(request ,*args,**kwargs)
 
@@ -92,6 +92,7 @@ class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
     def get_context_data(self, **kwargs):
         kwargs['data'] = 'update'
         return super().get_context_data(**kwargs)
+
 
 class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
     model = Post
