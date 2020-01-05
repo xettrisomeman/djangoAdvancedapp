@@ -45,6 +45,9 @@ class PostListView(LoginRequiredMixin,ListView):
     context_object_name = 'posts'
     template_name = 'webs/listview.html'
 
+    def get_queryset(self):
+        return self.model.objects.all().order_by('title')
+
 
 class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
