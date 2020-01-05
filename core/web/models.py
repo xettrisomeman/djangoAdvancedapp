@@ -48,8 +48,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE , blank=True)
-    commented_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE , blank=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    commented_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at= models.DateTimeField(editable=False)
     comment_id = models.UUIDField(default=uuid.uuid4 , editable=False)
     modified_at= models.DateTimeField(auto_now=True)
@@ -57,9 +57,9 @@ class Comment(models.Model):
 
     def save(self):
         if not self.id:
-            self.created_on = timezone.now()
+            self.created_at = timezone.now()
         return super().save()
     
     def __str__(self):
-        return self.comment_id
-    
+        return str(self.comment_id)
+

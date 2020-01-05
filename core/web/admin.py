@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin import ModelAdmin
-from .models import CustomUser  , Post
+from .models import (
+    CustomUser,
+    Post,
+    Comment
+)
 from .forms import (
     CustomUserAddForm,
     CustomUserChangeForm
@@ -41,11 +45,19 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email',)
 
 class CustomPost(ModelAdmin):
-    list_display = ('title','post_id')
+    list_display = ('title','post_id','created_by')
     list_filter = ('title' ,)
     ordering = ('title',)
-    search_fields = ('created_by',)
+    search_fields = ('title',)
 
+
+class CommentAdmin(ModelAdmin):
+    list_display = ('comment_id','commented_by')
+    list_filter = ('comment_id',)
+    ordering= ('comments',)
+
+
+admin.site.register(Comment , CommentAdmin)
 admin.site.register(Post , CustomPost)
 
 
