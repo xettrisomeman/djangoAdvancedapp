@@ -34,7 +34,9 @@ Post Detail
 {% for comment in comments %}
 {{comment.comments}}
 <p>by {{comment.commented_by}}</p>
+{% if user.email == comment.commented_by.email %}
 <a href="{% url 'commentdelete' comment.comment_id %}">Delete</a>
+{% endif %}
 <hr>
 <br>
 {% endfor %}
