@@ -34,6 +34,7 @@ Post Detail
 {% for comment in comments %}
 {{comment.comments}}
 <p>by {{comment.commented_by}}</p>
+<a href="{% url 'commentdelete' comment.comment_id %}">Delete</a>
 <hr>
 <br>
 {% endfor %}

@@ -129,7 +129,7 @@ class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
         return super().get_context_data(**kwargs)
 
 
-class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
+class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     template_name = 'webs/postdelete.html'
     success_url = reverse_lazy('list')
@@ -144,4 +144,17 @@ class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
         return self.model.objects.get(post_id=self.kwargs['post_id'])
 
 
+class CommentDeleteView(LoginRequiredMixin,DeleteView):
+    model = Comment
+    template_name = 'webs/commentdelete.html'
+    success_url = reverse_lazy('list')
+    context_object_name = 'comment'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.email != self.get_object().commented_by.email :
+            return redirect(reverse_lazy('list'))
+        return super().dispatch(request ,*args,**kwargs)
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(comment_id=self.kwargs['comment_id'])
 
