@@ -58,21 +58,21 @@ class PostListView(LoginRequiredMixin,ListView):
         return self.model.objects.all().order_by('title')
 
 
-class PostDetailView(LoginRequiredMixin,DetailView):
-    model = Post
-    context_object_name = 'post'
-    template_name= 'webs/detailview.html'
+# class PostDetailView(LoginRequiredMixin,DetailView):
+#     model = Post
+#     context_object_name = 'post'
+#     template_name= 'webs/detailview.html'
 
 
-    def get_object(self, queryset=None):
-        return self.model.objects.get(post_id=self.kwargs['post_id'])
+#     def get_object(self, queryset=None):
+#         return self.model.objects.get(post_id=self.kwargs['post_id'])
 
 
 @login_required(redirect_field_name=settings.LOGIN_REDIRECT_URL)
 def post_detail_view(request,post_id):
     post = get_object_or_404(Post , post_id=post_id)
     form = CommentForm()
-    comments = Comment.objects.all()
+    comments = Comment.objects.filter(post=post)
     datas = {
         'post':post,
         'form':form,
