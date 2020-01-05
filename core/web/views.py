@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import (
     LoginView , 
@@ -81,6 +81,11 @@ class PostUpdateView(SuccessMessageMixin,LoginRequiredMixin , UpdateView):
     success_url = reverse_lazy('list')
     success_message = 'Post has been updated'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.email != self.get_object().email :
+            return redirect(reverse_lazy('list'))
+        return super().dispatch(request ,*args,**kwargs)
+
     def get_object(self, queryset=None):
         return self.model.objects.get(post_id=self.kwargs['post_id'])
 
@@ -93,6 +98,11 @@ class PostDeleteView(SuccessMessageMixin,LoginRequiredMixin,DeleteView):
     template_name = 'webs/postdelete.html'
     success_url = reverse_lazy('list')
     context_object_name = 'post'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.email != self.get_object().created_by.email :
+            return redirect(reverse_lazy('list'))
+        return super().dispatch(request ,*args,**kwargs)
 
     def get_object(self, queryset=None):
         return self.model.objects.get(post_id=self.kwargs['post_id'])

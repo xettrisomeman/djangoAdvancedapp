@@ -14,8 +14,11 @@ Post Detail
 <p>Created_at: {{post.modified_at}}</p>
 
 <p>{{post.content}}</p>
+
+{% if user.email == post.created_by.email %}
 <a href="{% url 'delete' post.post_id %}" class='btn-danger'>Delete</a>
 <a href="{% url 'update' post.post_id %}" class="btn-primary">Update</a>
+{% endif %}
 <a href="{% url 'list' %}">Go Back</a>
 {% endblock %}
 
